@@ -1,23 +1,26 @@
 //+------------------------------------------------------------------+
-//| Candle Closing Time Remaining-(CCTR).mq4                           |
+//| Candle Closing Time Remaining-(CCTR).mq4                         |
 //| Copyright 2013,Foad Tahmasebi                                    |
-//| Version 1.0                                                      |
+//| Version 2.0                                                      |
 //| http://www.daskhat.ir                                            |
 //+------------------------------------------------------------------+
 #property copyright "Copyright 2013,Foad Tahmasebi"
 #property link      "http://www.daskhat.ir"
-
+ 
 #property indicator_chart_window
 //--- input parameters
-extern int       fontSize=9;
+ 
 extern int       location=1;
+extern int       displayServerTime=0;
+extern int       fontSize=9;
 extern color     colour=Silver;
-
+ 
+ 
 //--- variables
 double leftTime;
 string sTime;
 int days;
-
+string sCurrentTime;
 //+------------------------------------------------------------------+
 //| Custom indicator initialization function                         |
 //+------------------------------------------------------------------+
@@ -49,13 +52,19 @@ int deinit()
 //+------------------------------------------------------------------+
 int start()
   {
-
+ 
 //----
+ 
+ 
+   sCurrentTime=TimeToStr(TimeCurrent(),TIME_SECONDS);
+   
    leftTime =(Period()*60)-(TimeCurrent()-Time[0]);
    sTime= TimeToStr(leftTime,TIME_SECONDS);
    if(DayOfWeek()==0 || DayOfWeek()==6){
       if(location == 0){
-         Comment("Candle Closing Time Remaining: " + "Market Is Closed");
+      
+            Comment("Candle Closing Time Remaining: " + "Market Is Closed");
+ 
       }else{
          ObjectSetText("CandleClosingTimeRemaining-CCTR", "Market Is Closed",fontSize,"verdana",colour);
       }
@@ -63,15 +72,31 @@ int start()
       if(Period() == PERIOD_MN1 || Period()==PERIOD_W1){
          days =((leftTime/60)/60)/24;
          if(location == 0){
-            Comment("Candle Closing Time Remaining: " + days +"D - "+sTime);
+            if(displayServerTime == 0){
+               Comment("Candle Closing Time Remaining: " + days +"D - "+sTime);
+            }else{
+               Comment("Candle Closing Time Remaining: " + days +"D - "+sTime+ " ["+ sCurrentTime+"]");
+            }
          }else{
-            ObjectSetText("CandleClosingTimeRemaining-CCTR", days +"D - "+sTime,fontSize,"verdana",colour);
+            if(displayServerTime == 0){
+                ObjectSetText("CandleClosingTimeRemaining-CCTR", days +"D - "+sTime,fontSize,"verdana",colour);
+            }else{
+                ObjectSetText("CandleClosingTimeRemaining-CCTR", days +"D - "+sTime+ " ["+ sCurrentTime+"]",fontSize,"verdana",colour);
+            }
          }
       }else{  
          if(location == 0){
-            Comment("Candle Closing Time Remaining: " + sTime);
+            if(displayServerTime == 0){
+               Comment("Candle Closing Time Remaining: " + sTime);
+            }else{
+               Comment("Candle Closing Time Remaining: " + sTime+ " ["+ sCurrentTime+"]");
+            }
          }else{ 
-            ObjectSetText("CandleClosingTimeRemaining-CCTR", sTime,fontSize,"verdana",colour);
+            if(displayServerTime == 0){
+               ObjectSetText("CandleClosingTimeRemaining-CCTR", sTime,fontSize,"verdana",colour);
+            }else{
+               ObjectSetText("CandleClosingTimeRemaining-CCTR", sTime + " ["+ sCurrentTime+"]" ,fontSize,"verdana",colour);
+            }
          }
       }
    }
