@@ -23,14 +23,14 @@ Installation
 Usability Tips
 ==============
 
-- You can change the location of display time, by setting the "location" Input field as follows:
+You can change the location of display time, by setting the "location" Input field as follows:
 
 - set location 'Top-Left' : To be displayed in comment in the top-left part of the chart. 
 - set location 'Top-Right' : To be displayed in the top-right part of the chart.
 - set location 'Bottom-Left' : To be displayed in the bottom-left part of the chart.
 - set location 'Bottom-Right' : To be displayed in the bottom-right part of the chart.
 
-- You can on or off server time displaying by setting "displayServerTime" as follows: [v2]
+You can on or off server time displaying by setting "displayServerTime" as follows: [v2]
 
 - set 'On' : display server time. 
 - set 'Off' : don't display server time.
